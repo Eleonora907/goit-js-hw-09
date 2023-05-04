@@ -8,6 +8,7 @@ const daysValue = document.querySelector('[data-days]');
 const hoursValue = document.querySelector('[data-hours]');
 const minutesValue = document.querySelector('[data-minutes]');
 const secondsValue = document.querySelector('[data-seconds]');
+const inputField = document.querySelector('.flatpickr-input');
 
 flatpickr(datePicker, {
   enableTime: true,
@@ -29,34 +30,34 @@ flatpickr(datePicker, {
   },
 });
 
-(() => {
-  function countdown(targetDate) {
-    const intervalId = setInterval(() => {
-      const currentDate = new Date();
-      const timeDifference = new Date(targetDate) - currentDate;
-      if (timeDifference <= 0) {
-        clearInterval(intervalId);
-        return;
-      }
-      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
-        .toString()
-        .padStart(2, '0');
-      const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24)
-        .toString()
-        .padStart(2, '0');
-      const minutes = Math.floor((timeDifference / (1000 * 60)) % 60)
-        .toString()
-        .padStart(2, '0');
-      const seconds = Math.floor((timeDifference / 1000) % 60)
-        .toString()
-        .padStart(2, '0');
+function countdown(targetDate) {
+  const intervalId = setInterval(() => {
+    const currentDate = new Date();
+    const timeDifference = new Date(targetDate) - currentDate;
+    if (timeDifference <= 0) {
+      clearInterval(intervalId);
+      return;
+    }
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
+      .toString()
+      .padStart(2, '0');
+    const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24)
+      .toString()
+      .padStart(2, '0');
+    const minutes = Math.floor((timeDifference / (1000 * 60)) % 60)
+      .toString()
+      .padStart(2, '0');
+    const seconds = Math.floor((timeDifference / 1000) % 60)
+      .toString()
+      .padStart(2, '0');
 
-      daysValue.textContent = days;
-      hoursValue.textContent = hours;
-      minutesValue.textContent = minutes;
-      secondsValue.textContent = seconds;
-    }, 1000);
-  }
+    daysValue.textContent = days;
+    hoursValue.textContent = hours;
+    minutesValue.textContent = minutes;
+    secondsValue.textContent = seconds;
+  }, 1000);
+}
+
 
   startButton.addEventListener('click', () => {
     if (!startButton.hasAttribute('disabled')) {
@@ -64,4 +65,3 @@ flatpickr(datePicker, {
       startButton.setAttribute('disabled', 'disabled');
     }
   });
-})();
