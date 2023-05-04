@@ -1,15 +1,14 @@
-import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.min.css";
-import Notiflix from "notiflix";
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
 
-const datePicker = document.querySelector("#datetime-picker");
+const datePicker = document.querySelector('#datetime-picker');
 const startButton = document.querySelector('[data-start]');
 const daysValue = document.querySelector('[data-days]');
 const hoursValue = document.querySelector('[data-hours]');
 const minutesValue = document.querySelector('[data-minutes]');
 const secondsValue = document.querySelector('[data-seconds]');
 
-// Створюємо flatpickr і додаємо обробник події onClose
 flatpickr(datePicker, {
   enableTime: true,
   time_24hr: true,
@@ -30,31 +29,39 @@ flatpickr(datePicker, {
   },
 });
 
-// Прослуховуємо клік на кнопці "Start"
-startButton.addEventListener('click', () => {
-  if (!startButton.hasAttribute('disabled')) {
-    countdown(startButton.getAttribute('data-start-date'));
-    startButton.setAttribute('disabled', 'disabled');
-  }
-});
-
-// Функція відліку
-function countdown(targetDate) {
+(() => {
+  function countdown(targetDate) {
     const intervalId = setInterval(() => {
       const currentDate = new Date();
-      const timeDifference = Date.parse(targetDate) - currentDate;
+      const timeDifference = new Date(targetDate) - currentDate;
       if (timeDifference <= 0) {
         clearInterval(intervalId);
         return;
       }
-      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-      const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24).toString().padStart(2, '0');
-      const minutes = Math.floor((timeDifference / (1000 * 60)) % 60).toString().padStart(2, '0');
-      const seconds = Math.floor((timeDifference / 1000) % 60).toString().padStart(2, '0');
-  
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
+        .toString()
+        .padStart(2, '0');
+      const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24)
+        .toString()
+        .padStart(2, '0');
+      const minutes = Math.floor((timeDifference / (1000 * 60)) % 60)
+        .toString()
+        .padStart(2, '0');
+      const seconds = Math.floor((timeDifference / 1000) % 60)
+        .toString()
+        .padStart(2, '0');
+
       daysValue.textContent = days;
       hoursValue.textContent = hours;
       minutesValue.textContent = minutes;
       secondsValue.textContent = seconds;
     }, 1000);
   }
+
+  startButton.addEventListener('click', () => {
+    if (!startButton.hasAttribute('disabled')) {
+      countdown(startButton.getAttribute('data-start-date'));
+      startButton.setAttribute('disabled', 'disabled');
+    }
+  });
+})();

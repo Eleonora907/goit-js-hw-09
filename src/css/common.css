@@ -17,5 +17,17 @@ img {
   max-width: 100%;
 }
 
+.timer {
+  display: flex;
+}
+
+.field {
+  display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
 
 
